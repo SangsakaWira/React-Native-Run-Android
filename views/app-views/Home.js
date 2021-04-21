@@ -7,19 +7,21 @@
  */
 
  import React, {useEffect,useState} from 'react';
+ import { NavigationContainer } from '@react-navigation/native';
  import Axios from 'axios'
  import {
-   SafeAreaView,
    Text,
-   useColorScheme,
  } from 'react-native';
- 
- import {
-   Colors
- } from 'react-native/Libraries/NewAppScreen';
+
+ const HomeScreen = () => {
+    return (
+      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+        <Text>Home Screen</Text>
+      </View>
+    );
+  }
  
  const App = () => {
-   const isDarkMode = useColorScheme() === 'dark';
  
    useState(()=>{
      Axios.get("https://jsonplaceholder.typicode.com/posts").then(doc=>{
@@ -27,14 +29,13 @@
      })
    },[])
  
-   const backgroundStyle = {
-     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-   };
  
    return (
-     <SafeAreaView style={backgroundStyle}>
-       <Text>Tes World</Text>
-     </SafeAreaView>
+    <NavigationContainer>
+    <Stack.Navigator>
+      <Stack.Screen name="Home" component={HomeScreen} />
+    </Stack.Navigator>
+  </NavigationContainer>
    );
  };
  

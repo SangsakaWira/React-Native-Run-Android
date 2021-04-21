@@ -1,58 +1,28 @@
-import { SafeAreaView, View, FlatList, StyleSheet, Text, StatusBar } from 'react-native';
-import React, {useEffect,useState} from 'react';
-import Axios from 'axios'
+// In App.js in a new project
 
+import * as React from 'react';
+import { View, Text } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 
-const Item = ({ title,body }) => (
-  <View style={styles.item}>
-    <Text style={styles.title}>{title}</Text>
-    <Text style={styles.bodyTitle}>{body}</Text>
-  </View>
-);
-
-const App = () => {
-
-  const [data,setData] = useState([])
-
-  useEffect(()=>{
-    Axios.get("https://jsonplaceholder.typicode.com/posts").then(doc=>{
-      console.log(doc.data[0].body)
-      setData(doc.data)
-    })
-  },[])
-
-  const renderItem = ({ item }) => (
-    <Item title={item.title} body={item.body} />
-  );
-
+function HomeScreen() {
   return (
-    <SafeAreaView style={styles.container}>
-      <FlatList
-        data={data}
-        renderItem={renderItem}
-        keyExtractor={item => item.id}
-      />
-    </SafeAreaView>
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <Text>Home Screen</Text>
+    </View>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    marginTop: StatusBar.currentHeight || 0,
-  },
-  item: {
-    backgroundColor: '#f9c2ff',
-    padding: 20,
-    marginVertical: 8,
-    marginHorizontal: 16,
-  },
-  title: {
-    fontSize: 15,
-  }, 
-  bodyTitle: {
-    fontSize: 8,
-  },
-});
+const Stack = createStackNavigator();
+
+function App() {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="Home" component={HomeScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+}
 
 export default App;
